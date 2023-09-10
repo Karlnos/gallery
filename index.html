@@ -13,14 +13,46 @@
         }
 
         header {
-            background-color: #333;
+            background-color: #2196F3; /* Google Photos Blue */
             color: #fff;
             text-align: center;
             padding: 10px 0;
+            position: relative;
         }
 
-        h1 {
-            margin: 0;
+        .app-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 24px;
+        }
+
+        .app-title img {
+            height: 32px; /* Adjust the size as needed */
+        }
+
+        .create-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+
+        .create-button label {
+            display: block;
+            width: 36px;
+            height: 36px;
+            background-color: #f44336; /* Google Red */
+            border-radius: 50%;
+            text-align: center;
+            line-height: 36px;
+            color: #fff;
+            font-size: 24px;
+        }
+
+        #file-input {
+            display: none;
         }
 
         main {
@@ -28,32 +60,40 @@
         }
 
         .gallery {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            justify-items: center;
         }
 
         img {
             max-width: 100%;
             height: auto;
-            margin: 10px;
-            cursor: pointer;
-        }
-
-        #image3 {
-            cursor: pointer;
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Gallery App</h1>
+        <div class="app-title">
+            <img src="samsung_logo.png" alt="Samsung Logo">
+            <h1>Gallery App</h1>
+        </div>
+        <div class="create-button">
+            <label for="file-input">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <path d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-9H7v2h4v4h2v-4h4v-2h-4V7h-2v4z"/>
+                </svg>
+            </label>
+            <input type="file" id="file-input" accept="image/*">
+        </div>
     </header>
     <main>
         <div class="gallery">
             <img src="image1.jpg" alt="Image 1">
             <img src="image2.jpg" alt="Image 2">
             <img src="image3.jpg" alt="Image 3" id="image3">
+            <!-- Add more images here -->
         </div>
     </main>
     <script>
