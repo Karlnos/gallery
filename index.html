@@ -1,106 +1,51 @@
+```html
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gallery App</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #fff; /* White background */
-        }
-
-        header {
-            background-color: #fff;
-            text-align: center;
-            padding: 10px 0;
-            position: relative;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
-        }
-
-        .app-title {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            font-size: 24px;
-            color: #333; /* Dark text color */
-        }
-
-        .create-button {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            cursor: pointer;
-            width: 60px;
-            height: 60px;
-            background-color: #000; /* Black background */
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .create-button svg {
-            width: 36px;
-            height: 36px;
-            fill: #fff; /* White plus symbol color */
-        }
-
-        #file-input {
-            display: none;
-        }
-
-        main {
-            padding: 20px;
-        }
-
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
-            justify-items: center;
-        }
-
-        img {
-            max-width: 100%;
-            height: auto;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Japanese Word Recognition</title>
+  <style>
+    #input {
+      width: 300px;
+      height: 50px;
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <div class="app-title">
-            <h1>Gallery App</h1>
-        </div>
-        <label for="file-input" class="create-button">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                <path d="M0 0h24v24H0z" fill="none"/>
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2-9h4v2H10v4h-2v-4H6v-2h4V7z"/>
-            </svg>
-        </label>
-        <input type="file" id="file-input" accept="image/*">
-    </header>
-    <main>
-        <div class="gallery">
-            <img src="image1.jpg" alt="Image 1">
-            <img src="image2.jpg" alt="Image 2">
-            <img src="image3.jpg" alt="Image 3" id="image3">
-            <!-- Add more images here -->
-        </div>
-    </main>
-    <script>
-        const image3 = document.getElementById("image3");
-        let tapCount = 0;
+  <h1>Japanese Word Recognition</h1>
+  <input type="text" id="input" placeholder="Enter Japanese word">
+  <button onclick="convertToSpeech()">Speak</button>
 
-        image3.addEventListener("click", () => {
-            tapCount++;
-            if (tapCount === 3) {
-                window.location.href = "example.html";
-            }
-        });
-    </script>
+  <script>
+    // Check if Web Speech API is supported
+    if ('speechSynthesis' in window && 'SpeechRecognition' in window) {
+      const recognition = new window.SpeechRecognition();
+      const speechSynthesis = window.speechSynthesis;
+      
+      // Set the language to Japanese
+      recognition.lang = 'ja-JP';
+      
+      recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        const utterance = new SpeechSynthesisUtterance(transcript);
+        utterance.lang = 'en-US';
+        
+        // Set the voice to a robotic voice
+        const voices = speechSynthesis.getVoices();
+        utterance.voice = voices.find(voice => voice.name === 'Google US English');
+        
+        // Speak the converted English text
+        speechSynthesis.speak(utterance);
+      };
+      
+      function convertToSpeech() {
+        recognition.start();
+      }
+    } else {
+      alert('Web Speech API is not supported in this browser.');
+    }
+  </script>
 </body>
 </html>
